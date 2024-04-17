@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accounts</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>Accounts</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>API Key</th>
+          <th>API Secret</th>
+          <th>Account Name</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for account in accounts %}
+        <tr>
+          <td>{{ account[1] }}</td>
+          <td>{{ account[2] }}</td>
+          <td><a href="{{ url_for('update_status', account_id=account[0]) }}">{{ account[3] }}</a></td>
+          <td>{{ account[4] }}</td>
+          <td>
+            <a href="{{ url_for('update_status', account_id=account[0]) }}" class="btn btn-primary">Activate</a>
+            <a href="{{ url_for('update_status', account_id=account[0]) }}" class="btn btn-danger">Deactivate</a>
+            <a href="{{ url_for('delete_account', account_id=account[0]) }}" class="btn btn-warning">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <h2>Add Account</h2>
+    <form action="{{ url_for('add_account') }}" method="POST">
+      <input type="text" name="api_key" placeholder="API Key" required><br>
+      <input type="text" name="api_secret" placeholder="API Secret" required><br>
+      <input type="text" name="account_name" placeholder="Account Name" required><br>
+      <button type="submit" class="btn btn-primary">Add Account</button>
+    </form>
+  </div>
+</body>
+</html>
